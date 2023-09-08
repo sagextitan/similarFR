@@ -1,3 +1,5 @@
+#Added tolerance for face similarity match, preprocessing added to speed up the process, & AllImages folder now has more robust format
+
 import cv2
 import face_recognition
 import os
@@ -6,6 +8,14 @@ import numpy as np
 from flask import Flask, render_template, request, jsonify, send_from_directory
 
 app = Flask(__name__)
+
+def load_and_preprocess_image(image_data):
+    image_data = image_data.split(',')[1]  
+    image_bytes = base64.b64decode(image_data)
+    nparr = np.frombuffer(image_bytes, np.uint8)
+    return cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+tolerance = 0.5
 
 @app.route('/AllImages/<path:filename>')
 def serve_static(filename):
@@ -17,14 +27,12 @@ def index():
 
 @app.route('/find_similar_images', methods=['POST'])
 def find_similar_images():
-    image_data = request.form['image_data'].split(',')[1] 
-    image_bytes = base64.b64decode(image_data)
-    nparr = np.frombuffer(image_bytes, np.uint8)
-    frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    image_data = request.form['image_data']
+    
+    frame = load_and_preprocess_image(image_data)
 
     captured_face_encodings = face_recognition.face_encodings(frame)
 
-   
     if len(captured_face_encodings) == 0:
         return jsonify({"similar_images": []})
     else:
@@ -32,13 +40,14 @@ def find_similar_images():
         similar_images = []
 
         for image_path in all_image_paths:
-            image = face_recognition.load_image_file(os.path.join("AllImages", image_path))
-            face_encodings = face_recognition.face_encodings(image)
+            if image_path.lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.bmp')):
+                image = face_recognition.load_image_file(os.path.join("AllImages", image_path))
+                face_encodings = face_recognition.face_encodings(image)
 
-            for face_encoding in face_encodings:
-                match_results = face_recognition.compare_faces(captured_face_encodings, face_encoding)
-                if any(match_results):
-                    similar_images.append(image_path)
+                for face_encoding in face_encodings:
+                    match_results = face_recognition.compare_faces(captured_face_encodings, face_encoding, tolerance=tolerance)
+                    if any(match_results):
+                        similar_images.append(image_path)
 
         return jsonify({"similar_images": similar_images})
 
