@@ -14,10 +14,12 @@
             border-radius: 100%;
             overflow: hidden; 
             fill: #0056b3;
+            /* transform: scaleX(-1); */
         }
 
         #video {
-            
+            transform: scaleX(-1);
+            object-fit: cover;
         }
 
         #logo {
@@ -333,21 +335,43 @@
                     url: '/find_similar_images',
                     data: { image_data: imageData },
                     success: function(data) {
+                        // $('#result').empty();
+                        // if (data.similar_images.length > 0) {
+                        //     data.similar_images.forEach(function(imagePath) {
+
+                        //         const encodedImagePath = imagePath.replace(/ /g, '%20');
+                        //         $('#result').append('<img src="/AllImages/' + encodedImagePath + '" width="auto" height="400" marginRight = "10">');
+                        //     });
+
+                        //     $('#whatsappButtonTop').show();
+                        // } else {
+
+                        //     $('#noResults').show();
+                        //     $('#errorIframe').attr('src', 'https://tally.so/r/wA2GEN');
+                        //     $('#iframeContainer').show();
+                        // }
                         $('#result').empty();
                         if (data.similar_images.length > 0) {
                             data.similar_images.forEach(function(imagePath) {
-
                                 const encodedImagePath = imagePath.replace(/ /g, '%20');
-                                $('#result').append('<img src="/AllImages/' + encodedImagePath + '" width="400" height="400">');
+                                const imageElement = $('<img>')
+                                    .attr('src', '/AllImages/' + encodedImagePath)
+                                    .css({
+                                        'width': 'auto',
+                                        'height': '400px',
+                                        'margin-right': '16px',
+                                        'border-radius': '8px'
+                                    });
+                                $('#result').append(imageElement);
                             });
 
                             $('#whatsappButtonTop').show();
                         } else {
-
                             $('#noResults').show();
                             $('#errorIframe').attr('src', 'https://tally.so/r/wA2GEN');
                             $('#iframeContainer').show();
                         }
+
                     },
                     error: function(error) {
                         console.error('Error capturing image:', error);
