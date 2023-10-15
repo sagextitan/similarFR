@@ -1,0 +1,17 @@
+   <!DOCTYPE html>
+   <html>
+   <head>
+       <title>Admin Panel</title>
+   </head>
+   <body>
+       <h1>Admin Panel</h1>
+
+       <form action="/upload" method="post" enctype="multipart/form-data">
+           <input type="file" name="file">
+           <input type="submit" value="Upload">
+       </form>
+
+       <button onclick="location.href='/run_preprocess_and_encode'">Run preprocess_and_encode.py</button>
+       <button onclick="location.href='/run_app'">Run app.py</button>
+   </body>
+   </html>
