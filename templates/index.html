@@ -4,6 +4,17 @@
     <title>Find Similar Images</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
+
+        #centerImage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            width: 225px;
+            height: 298px;
+        }
+
         #videoContainer {
             display: none;
             position: relative; 
@@ -14,7 +25,6 @@
             border-radius: 100%;
             overflow: hidden; 
             fill: #0056b3;
-            /* transform: scaleX(-1); */
         }
 
         #video {
@@ -37,10 +47,17 @@
             align-items: center;
         }
 
-        #mainTitle {
+        #mainTitleOne {
             color: #FF5B91;
             text-align: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #mainTitleThree {
+            color: #FF5B91;
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: none;
         }
 
         #iframeContainer {
@@ -187,7 +204,14 @@
         #noResults {
             text-align: center; 
             margin-top: 20px; 
-            font-size: 18px; 
+            font-size: 18px;
+            color: #000;
+            text-align: center;
+            font-family: Lato;
+            font-size: 32px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
         }
 
         
@@ -214,7 +238,7 @@
             background-color: #0056b3; 
         }
 
-        #bottomImageContainer {
+        /* #bottomImageContainer {
             position: fixed;
             bottom: 0;
             left: 0;
@@ -223,11 +247,25 @@
             height: 200px;
             background-color: rgba(255, 255, 255, 0.9); 
             z-index: 9998; 
+            display: none;
+        } */
+        #bottomImageContainer {
+            position: fixed;
+            bottom: 300px; 
+            left: 0;
+            padding-bottom: 50px;
+            width: 100%;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 0.9); 
+            z-index: 9998;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         #bottomImage {
-            width: 100%;
-            height: 400px;
+            max-width: 100%; 
+            height: auto;
         }
 
         #captureBtn.clicked + #bottomImageContainer {
@@ -246,28 +284,35 @@
         </div>
     </div>
 
-    <h1 id="mainTitle">Get your images from this event</h1>
-    <button id="captureBtn">Start</button>
+    <h1 id="mainTitleOne">Find your photos from <br>
+        the Baby Welcoming Ceremony</h1>
+    <h1 id="mainTitleThree">Your photos from <br>
+        the Baby Welcoming Ceremony</h1>
+    <button id="captureBtn">Click a selfie</button>
+    <!-- <div id="videoContainer" style="display:none;">
+        <video id="video" autoplay></video>
+    </div> -->
     <div id="videoContainer" style="display:none;">
         <video id="video" autoplay></video>
+        <img id="centerImage" src="https://betterhalf.algomage.com/static/media/faceImg.fb891e064eb07359df5c.png" alt="Back Image">
     </div>
-    <button id="findSimilarBtn" style="display:none;">Find your pictures</button>
+    <button id="findSimilarBtn" style="display:none;">Find my photos</button>
     <div id="result">
-        <!-- Display similar images here -->
+
     </div>
     <div id="noResults" style="display:none;">
-        <p>No similar images found, but don't worry give your detail here, and <br>get your images on your WhatsApp in 24 hours!</p>
+        <p>Looks like we don’t have enough photos of you yet.<br>Submit your email id to get all your photos <br>within 72 hours.</p>
         <button id="refreshPageBtn">Refresh Page</button>
     </div>
     <div id="whatsappButtonTop" style="display:none;">
-        <button id="getWhatsAppBtn">Get all images on WhatsApp</button>
+        <button id="getWhatsAppBtn">Get your images on email</button>
     </div>
     <div id="iframeContainer">
         <iframe id="errorIframe" frameborder="0" sandbox="allow-same-origin allow-scripts"></iframe>
     </div>
-    <!-- <div id="bottomImageContainer">
-        <img src="https://uploads-ssl.webflow.com/64f8d2ac10506043b96ce4fb/64fafbe15d98a22169a482f0_fwbh%20banner.jpg" alt="Bottom Image" id="bottomImage">
-    </div> -->
+    <div id="bottomImageContainer">
+        <img src="https://uploads-ssl.webflow.com/64f8d2ac10506043b96ce4fb/6506966385186409b5a7b07e_Group%205.jpg" alt="Bottom Image" id="bottomImage">
+    </div>
     
 
     <script>
@@ -279,10 +324,11 @@
             $('#captureBtn').click(function() {
                 
                 $('#captureBtn').hide();
-
-                
                 $('#findSimilarBtn').show();
-
+                $('#bottomImageContainer').hide();
+                $('#mainTitleOne').show();
+                $('#mainTitleTwo').hide();
+                $('#mainTitleThree').hide();
                 
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     navigator.mediaDevices.getUserMedia({ video: true })
@@ -301,6 +347,10 @@
 
             $('#findSimilarBtn').click(function() {
                 
+                $('#bottomImageContainer').hide();
+
+                $('#mainTitleThree').hide();
+
                 $('#findSimilarBtn').hide();
                
                 $('#result').html('<p>Wait, we are finding your pictures, or get your pictures on <a href="#" id="googleLink">WhatsApp</a></p>');
@@ -355,7 +405,7 @@
                             data.similar_images.forEach(function(imagePath) {
                                 const encodedImagePath = imagePath.replace(/ /g, '%20');
                                 const imageElement = $('<img>')
-                                    .attr('src', '/AllImages/' + encodedImagePath)
+                                    .attr('src', '/' + encodedImagePath)
                                     .css({
                                         'width': 'auto',
                                         'height': '400px',
@@ -366,10 +416,18 @@
                             });
 
                             $('#whatsappButtonTop').show();
+                            $('#bottomImageContainer').hide();
+                            $('#mainTitleOne').hide();
+                            $('#mainTitleTwo').hide();
+                            $('#mainTitleThree').show();
                         } else {
                             $('#noResults').show();
                             $('#errorIframe').attr('src', 'https://tally.so/r/wA2GEN');
                             $('#iframeContainer').show();
+                            $('#bottomImageContainer').hide();
+                            $('#mainTitleOne').hide();
+                            $('#mainTitleTwo').hide();
+                            $('#mainTitleThree').hide();
                         }
 
                     },
@@ -381,11 +439,15 @@
 
             $('#refreshPageBtn').click(function() {
                 location.reload();
+                $('#bottomImageContainer').hide();
+                $('#mainTitleThree').hide();
             });
 
             $('#getWhatsAppBtn').click(function() {
                 $('#iframeContainer iframe').attr('src', 'https://tally.so/r/wA2GEN');
                 $('#iframeContainer').show();
+                $('#bottomImageContainer').hide();
+                $('#mainTitleThree').hide();
             });
         });
     </script>

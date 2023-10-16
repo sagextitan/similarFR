@@ -41,4 +41,5 @@ def preprocess_and_encode_images(directory_path, save_partial=False):
 
 if __name__ == '__main__':
     directory_path = sys.argv[1] if len(sys.argv) > 1 else 'AllImages'
-    preprocess_and_encode_images(directory_path)
+    # preprocess_and_encode_images(directory_path)
+    encoded_faces = preprocess_and_encode_images(directory_path)
