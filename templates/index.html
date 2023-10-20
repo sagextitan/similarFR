@@ -1,298 +1,34 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Find Similar Images</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')
+    }}""/>
+    <link
+      rel=" icon"
+      href="{{ url_for('static', filename='assets/favicon.ico') }}"
+    />
+  </head>
 
-        #centerImage {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1;
-            width: 225px;
-            height: 298px;
-        }
-
-        #videoContainer {
-            display: none;
-            position: relative; 
-            width: 480px; 
-            height: 480px; 
-            margin: 0 auto; 
-            border: 2px solid #5C27B2;
-            border-radius: 100%;
-            overflow: hidden; 
-            fill: #0056b3;
-        }
-
-        #video {
-            transform: scaleX(-1);
-            object-fit: cover;
-        }
-
-        #logo {
-            width: 292px;
-            height: 99px;
-            background-color: #ffffff;
-            text-align: center;
-            line-height: 50px;
-            cursor: pointer;
-        }
-
-        #flexlogo {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #mainTitleOne {
-            color: #FF5B91;
-            text-align: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        #mainTitleThree {
-            color: #FF5B91;
-            text-align: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: none;
-        }
-
-        #iframeContainer {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -30%);
-            width: 500px;
-            height: 600px;
-            background-color: rgba(255, 255, 255, 0.9);
-            z-index: 9999;
-        }
-        #iframeContainer iframe {
-            width: 100%;
-            height: 100%;
-            border: 2px solid pink;
-            border-radius: 16px;
-        }
-
-
-        #captureBtn {
-            display: block; 
-            margin: 0 auto; 
-            display: flex;
-            width: 469.794px;
-            height: 69px;
-            padding: 11.443px 41.003px;
-            justify-content: center;
-            align-items: center;
-            gap: 9.536px;
-            flex-shrink: 0;
-            color: var(--Surface-White, #FFF);
-            text-align: center;
-            font-family: Lato;
-            font-size: 19.071px;
-            font-style: normal;
-            font-weight: 800;
-            line-height: normal;
-            border-radius: 30.514px;
-            background: #FF5B91;
-            box-shadow: 0px 1.90711px 3.81422px 0px rgba(155, 146, 146, 0.12);
-            cursor: pointer;
-        }
-
-        #findSimilarBtn {
-            display: block; 
-            margin: 0 auto; 
-            display: flex;
-            width: 469.794px;
-            height: 69px;
-            padding: 11.443px 41.003px;
-            justify-content: center;
-            align-items: center;
-            gap: 9.536px;
-            flex-shrink: 0;
-            color: var(--Surface-White, #FFF);
-            text-align: center;
-            font-family: Lato;
-            font-size: 19.071px;
-            font-style: normal;
-            font-weight: 800;
-            line-height: normal;
-            border-radius: 30.514px;
-            background: #FF5B91;
-            box-shadow: 0px 1.90711px 3.81422px 0px rgba(155, 146, 146, 0.12);
-            cursor: pointer;
-        }
-
-        #getWhatsAppBtn {
-            display: block;
-            margin: 0 auto; 
-            display: flex;
-            width: 469.794px;
-            height: 69px;
-            padding: 11.443px 41.003px;
-            justify-content: center;
-            align-items: center;
-            gap: 9.536px;
-            flex-shrink: 0;
-            color: var(--Surface-White, #FFF);
-            text-align: center;
-            font-family: Lato;
-            font-size: 19.071px;
-            font-style: normal;
-            font-weight: 800;
-            line-height: normal;
-            border-radius: 30.514px;
-            background: #FF5B91;
-            box-shadow: 0px 1.90711px 3.81422px 0px rgba(155, 146, 146, 0.12);
-            cursor: pointer;
-        }
-
-        .refreshPageBtn {
-            display: block; 
-            margin: 0 auto; 
-            display: flex;
-            width: 469.794px;
-            height: 69px;
-            padding: 11.443px 41.003px;
-            justify-content: center;
-            align-items: center;
-            gap: 9.536px;
-            flex-shrink: 0;
-            color: var(--Surface-White, #FFF);
-            text-align: center;
-            font-family: Lato;
-            font-size: 19.071px;
-            font-style: normal;
-            font-weight: 800;
-            line-height: normal;
-            border-radius: 30.514px;
-            background: #FF5B91;
-            box-shadow: 0px 1.90711px 3.81422px 0px rgba(155, 146, 146, 0.12);
-            cursor: pointer;
-        }
-
-        #result {
-            color: #000;
-            font-family: Lato;
-            font-size: 18px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-            text-align: center;
-        }
-
-        #googleLink {
-            color: #5C27B2;
-            font-family: Lato;
-            font-size: 18px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: normal;
-            text-decoration-line: underline;
-        }
-
-
-        #googleLink:hover {
-            color: #FF5B91; 
-        }
-
-        
-        #noResults {
-            text-align: center; 
-            margin-top: 20px; 
-            font-size: 18px;
-            color: #000;
-            text-align: center;
-            font-family: Lato;
-            font-size: 32px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-        }
-
-        
-        #noResults p {
-            color: #000000; 
-            font-weight: bold;
-            font-family: lato;
-        }
-
-        
-        #refreshPageBtn {
-            background-color: #007BFF;
-            color: white; 
-            padding: 10px 20px; 
-            border: none; 
-            border-radius: 5px; 
-            font-size: 16px; 
-            cursor: pointer; 
-            margin-top: 10px; 
-        }
-
-        
-        #refreshPageBtn:hover {
-            background-color: #0056b3; 
-        }
-
-        /* #bottomImageContainer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            padding-bottom: 50px;
-            width: 100%;
-            height: 200px;
-            background-color: rgba(255, 255, 255, 0.9); 
-            z-index: 9998; 
-            display: none;
-        } */
-        #bottomImageContainer {
-            position: fixed;
-            bottom: 300px; 
-            left: 0;
-            padding-bottom: 50px;
-            width: 100%;
-            height: 100px;
-            background-color: rgba(255, 255, 255, 0.9); 
-            z-index: 9998;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #bottomImage {
-            max-width: 100%; 
-            height: auto;
-        }
-
-        #captureBtn.clicked + #bottomImageContainer {
-            display: none; 
-        }
-
-
-
-
-    </style>
-</head>
-<body>
-    <div id="flexlogo">
+  <body>
+    <!-- Old code -->
+    <!-- <div id="flexlogo">
         <div id="logo">
             <img src="https://i.ibb.co/BjZptt7/Weddings-logo.png" alt="Logo" style="width: 100%; height: 100%;">
         </div>
     </div>
 
-    <h1 id="mainTitleOne">Find your photos from <br>
+    <h1 id="mainTitleOne">
+        Find your photos from <br>
         the Baby Welcoming Ceremony</h1>
     <h1 id="mainTitleThree">Your photos from <br>
         the Baby Welcoming Ceremony</h1>
-    <button id="captureBtn">Click a selfie</button>
+    <button id="captureBtn">Click a selfie</button> -->
     <!-- <div id="videoContainer" style="display:none;">
         <video id="video" autoplay></video>
     </div> -->
-    <div id="videoContainer" style="display:none;">
+    <!-- <div id="videoContainer" style="display:none;">
         <video id="video" autoplay></video>
         <img id="centerImage" src="https://betterhalf.algomage.com/static/media/faceImg.fb891e064eb07359df5c.png" alt="Back Image">
     </div>
@@ -312,144 +48,382 @@
     </div>
     <div id="bottomImageContainer">
         <img src="https://uploads-ssl.webflow.com/64f8d2ac10506043b96ce4fb/6506966385186409b5a7b07e_Group%205.jpg" alt="Bottom Image" id="bottomImage">
+    </div> -->
+
+    <!-- New code -->
+    <!-- Celebration confetti and ribbons on both sides of the window at the start -->
+    <div class="flex justify-between">
+      <div class="confetti-section confetti-left">
+        <img
+          src="{{ url_for('static', filename='assets/LeftRibbon.png') }}"
+          alt="Left confetti"
+        />
+      </div>
+      <div class="confetti-section confetti-right">
+        <img
+          src="{{ url_for('static', filename='assets/RightRibbon.png') }}"
+          alt="Right confetti"
+        />
+      </div>
     </div>
-    
+
+    <!-- Weddings By Betterhalf Logo -->
+    <div class="weddings-by-betterhalf-container flex justify-center">
+      <img
+        src="{{ url_for('static', filename='assets/WeddingsByBH.png') }}"
+        alt="Weddings By Betterhalf Logo"
+      />
+    </div>
+
+    <main class="flex flex-col center main-content-viewer">
+      <!-- This section helps the user understand the steps
+      of receiving photos for a particular event -->
+      <section id="welcome-section" class="flex flex-col center gap-1">
+        <h1>Find your photos from the XYZ event</h1>
+        <section class="flex steps-container gap-1">
+          <div class="step-container flex flex-col center">
+            <h4>Step 1</h4>
+            <img
+              src="{{ url_for('static', filename='assets/Step1.png') }}"
+              alt=""
+            />
+            <p>Click a selfie</p>
+          </div>
+          <div class="step-container flex flex-col center">
+            <h4>Step 2</h4>
+            <img
+              src="{{ url_for('static', filename='assets/Step2.png') }}"
+              alt=""
+            />
+            <p>Find your photos</p>
+          </div>
+          <div class="step-container flex flex-col center">
+            <h4>Step 3</h4>
+            <img
+              src="{{ url_for('static', filename='assets/Step3.png') }}"
+              alt=""
+            />
+            <p>Get them delivered to your email in 72 hours</p>
+          </div>
+        </section>
+        <button id="selfieCaptureBtn" class="flex center app-button">
+          Click a selfie
+        </button>
+      </section>
+      <!-- This section takes the selfie of the user in front of the camera -->
+      <section
+        id="selfie-capturing-section"
+        class="display-none flex-col center gap-1"
+      >
+        <div class="flex flex-col center gap-1">
+          <h1>Ready? Set? Smile!</h1>
+          <p>Scan your face to get your photos from the XYZ event</p>
+        </div>
+        <!-- video-container refers to the area where the
+        selfie will be captured -->
+        <div id="video-container" class="relative">
+          <video id="video" autoplay></video>
+          <img
+            src="{{ url_for('static', filename='assets/FaceOverlay.png') }}"
+            alt="Face Overlay"
+            id="centerImage"
+          />
+        </div>
+        <button id="findMyPhotosBtn" class="flex center app-button">
+          Find My Photos
+        </button>
+      </section>
+
+      <!-- This section is displayed after submitting the selfie
+         when the backend tells us that there are some similar images
+        found with respect to the above selfie -->
+      <section id="results-section" class="display-none flex-col center gap-1">
+        <div class="flex flex-col center gap-1">
+          <h1>Your photos from the XYZ event</h1>
+        </div>
+        <div class=""></div>
+        <button id="proceedToFormBtnAfterResultsScreen" class="flex center app-button">
+          Get your images on email
+        </button>
+      </section>
+
+      <!-- This section is displayed after submitting the selfie
+         when the backend tells us that there are no similar images
+        found with respect to the above selfie -->
+      <section
+        id="no-results-found-section"
+        class="display-none flex-col center gap-1"
+      >
+        <img
+          src="{{ url_for('static',filename = 'assets/Empty.png') }}"
+          alt="No Images Found"
+        />
+        <div class="flex flex-col center gap-1 w-40">
+          <h1>No photos found</h1>
+          <p>
+            Looks like we don’t have enough photos of you yet. Submit your email
+            id to get all your photos within 72 hours.
+          </p>
+        </div>
+
+        <button id="proceedToFormBtnAfterNoResultsScreen" class="flex center app-button">
+          Get your images on email
+        </button>
+      </section>
+
+      <!-- 
+        This section is displayed for showing the form 
+        in which the following fields are filled like 
+        name, email address & phone number through a third party
+        form library
+       -->
+      <section id="form-fillup-section" class="none flex-col center gap-1"></section>
+
+      <!-- This section is displayed after submitting the form
+         with details of the person like name, email id and address
+        so that images can be emailed to them -->
+      <section
+        id="form-submit-successful-section"
+        class="display-none flex-col center gap-1"
+      >
+        <img
+          src="{{ url_for('static',filename='assets/Success.png') }}"
+          alt="Form successfully submitted"
+        />
+        <div class="flex flex-col center gap-1">
+          <h1>Details submitted successfully</h1>
+          <p>
+            Thanks for sharing your details. We’ll share all your images within
+            72 hours.
+          </p>
+        </div>
+
+        <button id="proceedToNextSelfieBtn" class="flex center app-button">
+          Okay, got it!
+        </button>
+      </section>
+    </main>
 
     <script>
-        $(document).ready(function() {
-            const video = document.getElementById('video');
-            const videoContainer = document.getElementById('videoContainer');
-            let imageData = null;
+      // $(document).ready(function () {
+      //   const video = document.getElementById("video");
+      //   const videoContainer = document.getElementById("videoContainer");
+      //   let imageData = null;
 
-            $('#captureBtn').click(function() {
-                
-                $('#captureBtn').hide();
-                $('#findSimilarBtn').show();
-                $('#bottomImageContainer').hide();
-                $('#mainTitleOne').show();
-                $('#mainTitleTwo').hide();
-                $('#mainTitleThree').hide();
-                
-                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                    navigator.mediaDevices.getUserMedia({ video: true })
-                    .then(function(stream) {
-                        video.srcObject = stream;
-                        video.play();
-                        videoContainer.style.display = 'block';
-                    })
-                    .catch(function(error) {
-                        console.error('Error accessing the webcam:', error);
-                    });
-                } else {
-                    console.error('getUserMedia is not supported in this browser.');
-                }
-            });
+      //   $("#captureBtn").click(function () {
+      //     $("#captureBtn").hide();
+      //     $("#findSimilarBtn").show();
+      //     $("#bottomImageContainer").hide();
+      //     $("#mainTitleOne").show();
+      //     $("#mainTitleTwo").hide();
+      //     $("#mainTitleThree").hide();
 
-            $('#findSimilarBtn').click(function() {
-                
-                $('#bottomImageContainer').hide();
+      //     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      //       navigator.mediaDevices
+      //         .getUserMedia({ video: true })
+      //         .then(function (stream) {
+      //           video.srcObject = stream;
+      //           video.play();
+      //           videoContainer.style.display = "block";
+      //         })
+      //         .catch(function (error) {
+      //           console.error("Error accessing the webcam:", error);
+      //         });
+      //     } else {
+      //       console.error("getUserMedia is not supported in this browser.");
+      //     }
+      //   });
 
-                $('#mainTitleThree').hide();
+      //   $("#findSimilarBtn").click(function () {
+      //     $("#bottomImageContainer").hide();
 
-                $('#findSimilarBtn').hide();
-               
-                $('#result').html('<p>Wait, we are finding your pictures, or get your pictures on <a href="#" id="googleLink">WhatsApp</a></p>');
+      //     $("#mainTitleThree").hide();
 
-               
-                $('#googleLink').click(function() {
-                   
-                    $('#iframeContainer iframe').attr('src', 'https://tally.so/r/wA2GEN');
-                    $('#iframeContainer').show();
+      //     $("#findSimilarBtn").hide();
 
-                });
+      //     $("#result").html(
+      //       '<p>Wait, we are finding your pictures, or get your pictures on <a href="#" id="googleLink">WhatsApp</a></p>'
+      //     );
 
-                const canvas = document.createElement('canvas');
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                const context = canvas.getContext('2d');
-                context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                imageData = canvas.toDataURL('image/jpeg');
+      //     $("#googleLink").click(function () {
+      //       $("#iframeContainer iframe").attr(
+      //         "src",
+      //         "https://tally.so/r/wA2GEN"
+      //       );
+      //       $("#iframeContainer").show();
+      //     });
 
-                const stream = video.srcObject;
-                if (stream) {
-                    const tracks = stream.getTracks();
-                    tracks.forEach(function(track) {
-                        track.stop();
-                    });
-                    video.srcObject = null;
-                    videoContainer.style.display = 'none';
-                }
+      //     const canvas = document.createElement("canvas");
+      //     canvas.width = video.videoWidth;
+      //     canvas.height = video.videoHeight;
+      //     const context = canvas.getContext("2d");
+      //     context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      //     imageData = canvas.toDataURL("image/jpeg");
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/find_similar_images',
-                    data: { image_data: imageData },
-                    success: function(data) {
-                        // $('#result').empty();
-                        // if (data.similar_images.length > 0) {
-                        //     data.similar_images.forEach(function(imagePath) {
+      //     const stream = video.srcObject;
+      //     if (stream) {
+      //       const tracks = stream.getTracks();
+      //       tracks.forEach(function (track) {
+      //         track.stop();
+      //       });
+      //       video.srcObject = null;
+      //       videoContainer.style.display = "none";
+      //     }
 
-                        //         const encodedImagePath = imagePath.replace(/ /g, '%20');
-                        //         $('#result').append('<img src="/AllImages/' + encodedImagePath + '" width="auto" height="400" marginRight = "10">');
-                        //     });
+      //     $.ajax({
+      //       type: "POST",
+      //       url: "/find_similar_images",
+      //       data: { image_data: imageData },
+      //       success: function (data) {
+      //         // $('#result').empty();
+      //         // if (data.similar_images.length > 0) {
+      //         //     data.similar_images.forEach(function(imagePath) {
 
-                        //     $('#whatsappButtonTop').show();
-                        // } else {
+      //         //         const encodedImagePath = imagePath.replace(/ /g, '%20');
+      //         //         $('#result').append('<img src="/AllImages/' + encodedImagePath + '" width="auto" height="400" marginRight = "10">');
+      //         //     });
 
-                        //     $('#noResults').show();
-                        //     $('#errorIframe').attr('src', 'https://tally.so/r/wA2GEN');
-                        //     $('#iframeContainer').show();
-                        // }
-                        $('#result').empty();
-                        if (data.similar_images.length > 0) {
-                            data.similar_images.forEach(function(imagePath) {
-                                const encodedImagePath = imagePath.replace(/ /g, '%20');
-                                const imageElement = $('<img>')
-                                    .attr('src', '/' + encodedImagePath)
-                                    .css({
-                                        'width': 'auto',
-                                        'height': '400px',
-                                        'margin-right': '16px',
-                                        'border-radius': '8px'
-                                    });
-                                $('#result').append(imageElement);
-                            });
+      //         //     $('#whatsappButtonTop').show();
+      //         // } else {
 
-                            $('#whatsappButtonTop').show();
-                            $('#bottomImageContainer').hide();
-                            $('#mainTitleOne').hide();
-                            $('#mainTitleTwo').hide();
-                            $('#mainTitleThree').show();
-                        } else {
-                            $('#noResults').show();
-                            $('#errorIframe').attr('src', 'https://tally.so/r/wA2GEN');
-                            $('#iframeContainer').show();
-                            $('#bottomImageContainer').hide();
-                            $('#mainTitleOne').hide();
-                            $('#mainTitleTwo').hide();
-                            $('#mainTitleThree').hide();
-                        }
+      //         //     $('#noResults').show();
+      //         //     $('#errorIframe').attr('src', 'https://tally.so/r/wA2GEN');
+      //         //     $('#iframeContainer').show();
+      //         // }
+      //         $("#result").empty();
+      //         if (data.similar_images.length > 0) {
+      //           data.similar_images.forEach(function (imagePath) {
+      //             const encodedImagePath = imagePath.replace(/ /g, "%20");
+      //             const imageElement = $("<img>")
+      //               .attr("src", "/" + encodedImagePath)
+      //               .css({
+      //                 width: "auto",
+      //                 height: "400px",
+      //                 "margin-right": "16px",
+      //                 "border-radius": "8px",
+      //               });
+      //             $("#result").append(imageElement);
+      //           });
 
-                    },
-                    error: function(error) {
-                        console.error('Error capturing image:', error);
-                    }
-                });
-            });
+      //           $("#whatsappButtonTop").show();
+      //           $("#bottomImageContainer").hide();
+      //           $("#mainTitleOne").hide();
+      //           $("#mainTitleTwo").hide();
+      //           $("#mainTitleThree").show();
+      //         } else {
+      //           $("#noResults").show();
+      //           $("#errorIframe").attr("src", "https://tally.so/r/wA2GEN");
+      //           $("#iframeContainer").show();
+      //           $("#bottomImageContainer").hide();
+      //           $("#mainTitleOne").hide();
+      //           $("#mainTitleTwo").hide();
+      //           $("#mainTitleThree").hide();
+      //         }
+      //       },
+      //       error: function (error) {
+      //         console.error("Error capturing image:", error);
+      //       },
+      //     });
+      //   });
 
-            $('#refreshPageBtn').click(function() {
-                location.reload();
-                $('#bottomImageContainer').hide();
-                $('#mainTitleThree').hide();
-            });
+      //   $("#refreshPageBtn").click(function () {
+      //     location.reload();
+      //     $("#bottomImageContainer").hide();
+      //     $("#mainTitleThree").hide();
+      //   });
 
-            $('#getWhatsAppBtn').click(function() {
-                $('#iframeContainer iframe').attr('src', 'https://tally.so/r/wA2GEN');
-                $('#iframeContainer').show();
-                $('#bottomImageContainer').hide();
-                $('#mainTitleThree').hide();
-            });
+      //   $("#getWhatsAppBtn").click(function () {
+      //     $("#iframeContainer iframe").attr("src", "https://tally.so/r/wA2GEN");
+      //     $("#iframeContainer").show();
+      //     $("#bottomImageContainer").hide();
+      //     $("#mainTitleThree").hide();
+      //   });
+      // });
+
+      $(document).ready(() => {
+        const video = document.getElementById("video");
+        const videoContainer = document.getElementById("videoContainer");
+
+        let imageData = null;
+
+        /* When Click a Selfie button is clicked */
+        $("#selfieCaptureBtn").click(() => {
+          /*
+            Welcome Section with steps instruction is taken out of view
+          */
+          $("section#welcome-section").addClass("display-none");
+          $("section#welcome-section").removeClass("flex");
+
+          /* Selfie Capturing section with webcam access comes into picture */
+          $("section#selfie-capturing-section").addClass("flex");
+          $("section#selfie-capturing-section").removeClass("display-none");
+
+          /*
+          When the selfie capturing section comes up, it needs access to the data
+          sent from media source
+          */
+          if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices
+              .getUserMedia({ video: true })
+              .then((stream) => {
+                video.srcObject = stream;
+                video.play();
+                videoContainer.style.display = "block";
+              })
+              .catch((error) => {
+                console.error("Error accessing the webcam");
+              });
+          } else {
+            console.error("getUserMedia is not supported in this browser.");
+          }
         });
+
+        /* When Find my photos button is clicked */
+        $("#findMyPhotosBtn").click(() => {
+          const canvas = document.createElement("canvas");
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+
+          const context = canvas.getContext("2d");
+          context.drawImage(video, 0, 0, canvas.width, canvas.height);
+          imageData = canvas.toDataURL("image/jpeg");
+
+          const stream = video.srcObject;
+          if (stream) {
+            const tracks = stream.getTracks();
+            tracks.forEach((track) => {
+              track.stop();
+            });
+            video.srcObject = null;
+            $("section#selfie-capturing-section").addClass("display-none");
+            $("section#selfie-capturing-section").removeClass("flex");
+            /* Code related to hiding the div */
+          }
+          $.ajax({
+            type: "POST",
+            url: "/find_similar_images",
+            data: { image_data: imageData },
+            success: (data) => {
+              if (data.similar_images.length === 0) {
+                $("#no-results-found-section").removeClass("display-none");
+                $("#no-results-found-section").addClass("flex");
+              }else{
+                $('section#results-section').removeClass('display-none');
+                $('section#results-section').addClass('flex');
+              }
+            },
+            error: (error) => {
+              console.error("Error capturing image: ", error);
+            },
+          });
+        });
+
+        /* When Okay, got it button is clicked at the end when all steps
+        are done like selfie capture and form fillup with submission  */
+        $("#proceedToNextSelfieBtn").click(() => {
+          location.reload();
+        });
+      });
     </script>
-</body>
+  </body>
 </html>
