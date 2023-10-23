@@ -127,6 +127,7 @@ Selfie capturing section
   border: 2px solid #5c27b2;
   overflow: hidden;
   fill: #0056b3;
+  transform: scaleX(-1);
 }
 
 #centerImage {
