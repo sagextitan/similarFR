@@ -1,0 +1,184 @@
+/*
+Font families used:
+1. Lato font with 700 weight
+*/
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap");
+
+/*
+Flex , gap & display related utilities
+*/
+
+@import url("./utilities.css");
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  --primary-theme-color: #ff5b91;
+  --white: rgba(255, 255, 255, 1);
+  font-family: "Lato", sans-serif;
+}
+
+body {
+  background-color: rgba(236, 217, 255, 0.38);
+  min-height: 100vh;
+}
+
+.app-button {
+  background-color: var(--primary-theme-color);
+  color: var(--white);
+  padding: 1.5rem 4rem;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Styles for ribbons at the start */
+#confetti-block {
+  justify-content: space-between;
+}
+
+.confetti-section {
+  position: absolute;
+  top: 0;
+}
+
+.confetti-left {
+  left: 0;
+}
+
+.confetti-right {
+  right: 0;
+}
+
+.confetti-left img,
+.confetti-right img {
+  height: 10rem;
+  max-height: 12rem;
+}
+
+/* Styles for weddings by betterhalf both container and logo */
+.weddings-by-betterhalf-container {
+  width: 100%;
+  margin-top: 5rem;
+}
+
+.weddings-by-betterhalf-container img {
+  width: 310px;
+  height: 50%;
+}
+
+/* Styling for this main-content-viewer
+as it is the parent of several sub sections be it
+related to helping the user understand*/
+.main-content-viewer {
+  margin-top: 10px;
+  font-size: 1.2rem;
+}
+
+@media screen and (max-width: 1050px) {
+  .main-content-viewer {
+    font-size: 1.5rem;
+  }
+}
+
+/* welcome-section is set of styles 
+  applied to the section for welcoming the user to
+  start the selfie capturing process */
+
+#welcome-section h1 {
+  font-weight: 700;
+}
+
+#welcome-section > .steps-container {
+  background-color: var(--white);
+  padding: 2rem;
+  margin: 1rem 0;
+  border: 1px solid transparent;
+  border-radius: 1rem;
+}
+
+.step-container {
+  gap: 10px;
+  flex-basis: 33%;
+}
+
+.step-container > h4 {
+  text-transform: uppercase;
+}
+
+.step-container > img {
+  width: 123px;
+  height: 123px;
+}
+
+/*
+Selfie capturing section
+*/
+
+#video-container {
+  position: relative;
+  width: 30rem;
+  height: 30rem;
+  border-radius: 100%;
+  border: 2px solid #5c27b2;
+  overflow: hidden;
+  fill: #0056b3;
+}
+
+#centerImage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: 225px;
+  height: 298px;
+}
+
+/* Results section */
+.photos-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  height:100%;
+  max-height: 550px;
+  overflow: scroll;
+  padding: 1rem;
+  border: 2px solid pink;
+}
+
+.photo-grid-item {
+  height: 300px;
+  object-fit: contain;
+  border-radius: 1rem;
+}
+
+/* No images found section  */
+#no-results-found-section img,
+#form-submit-successful-section img {
+  width: 291px;
+  height: 291px;
+}
+
+#error-section p {
+  color: red;
+  font-weight: 700;
+}
+
+/* Form section */
+.form-container {
+  width: 500px;
+  height: 600px;
+}
+
+.form-container iframe {
+  width: 100%;
+  height: 100%;
+  border: 2px solid pink;
+  border-radius: 16px;
+}
+
