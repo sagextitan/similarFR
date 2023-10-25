@@ -1,184 +1,144 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Find Similar Images</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')
+
+<head>
+  <title>Find Similar Images</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css')
     }}""/>
     <link
-      rel=" icon"
-      href="{{ url_for('static', filename='assets/favicon.ico') }}"
-    />
-  </head>
+      rel=" icon" href="{{ url_for('static', filename='assets/favicon.ico') }}" />
+</head>
 
-  <body>
-    <!-- New code -->
-    <!-- Celebration confetti and ribbons on both sides of the window at the start -->
-    <div class="flex justify-between">
-      <div class="confetti-section confetti-left">
-        <img
-          src="{{ url_for('static', filename='assets/LeftRibbon.png') }}"
-          alt="Left confetti"
-        />
-      </div>
-      <div class="confetti-section confetti-right">
-        <img
-          src="{{ url_for('static', filename='assets/RightRibbon.png') }}"
-          alt="Right confetti"
-        />
-      </div>
+<body>
+  <!-- New code -->
+  <!-- Celebration confetti and ribbons on both sides of the window at the start -->
+  <div class="flex justify-between">
+    <div class="confetti-section confetti-left">
+      <img src="{{ url_for('static', filename='assets/LeftRibbon.png') }}" alt="Left confetti" />
     </div>
-
-    <!-- Weddings By Betterhalf Logo -->
-    <div class="weddings-by-betterhalf-container flex justify-center">
-      <img
-        src="{{ url_for('static', filename='assets/WeddingsByBH.png') }}"
-        alt="Weddings By Betterhalf Logo"
-      />
+    <div class="confetti-section confetti-right">
+      <img src="{{ url_for('static', filename='assets/RightRibbon.png') }}" alt="Right confetti" />
     </div>
+  </div>
 
-    <main class="flex flex-col center main-content-viewer">
-      <!-- This section helps the user understand the steps
+  <!-- Weddings By Betterhalf Logo -->
+  <div class="weddings-by-betterhalf-container flex justify-center">
+    <img src="{{ url_for('static', filename='assets/WeddingsByBH.png') }}" alt="Weddings By Betterhalf Logo" />
+  </div>
+
+  <main class="flex flex-col center main-content-viewer">
+    <!-- This section helps the user understand the steps
       of receiving photos for a particular event -->
-      <section id="welcome-section" class="flex flex-col center gap-1">
-        <h1>Find your photos from the XYZ event</h1>
-        <section class="flex steps-container gap-1">
-          <div class="step-container flex flex-col center">
-            <h4>Step 1</h4>
-            <img
-              src="{{ url_for('static', filename='assets/Step1.png') }}"
-              alt="Step 1"
-            />
-            <p>Click a selfie</p>
+    <section id="welcome-section" class="flex flex-col center gap-1">
+      <h1 class="text-lg">Find your photos from the XYZ event</h1>
+      <section class="flex steps-container gap-1">
+        <div class="step-container flex flex-col center">
+          <h4 class="text-sm">Step 1</h4>
+          <div class="step-visual">
+            <img src="{{ url_for('static', filename='assets/Step1.png') }}" alt="Step 1" />
           </div>
-          <div class="step-container flex flex-col center">
-            <h4>Step 2</h4>
-            <img
-              src="{{ url_for('static', filename='assets/Step2.png') }}"
-              alt="Step 2"
-            />
-            <p>Find your photos</p>
-          </div>
-          <div class="step-container flex flex-col center">
-            <h4>Step 3</h4>
-            <img
-              src="{{ url_for('static', filename='assets/Step3.png') }}"
-              alt="Step 3"
-            />
-            <p>Get them delivered to your email in 72 hours</p>
-          </div>
-        </section>
-        <button id="selfieCaptureBtn" class="flex center app-button">
-          Click a selfie
-        </button>
-      </section>
-
-      <!-- This section takes the selfie of the user in front of the camera -->
-      <section
-        id="selfie-capturing-section"
-        class="display-none flex-col center gap-1"
-      >
-        <div class="flex flex-col center gap-1">
-          <h1>Ready? Set? Smile!</h1>
-          <p>Scan your face to get your photos from the XYZ event</p>
+          <p class="text-sm">Click a selfie</p>
         </div>
+        <div class="step-container flex flex-col center">
+          <h4 class="text-sm">Step 2</h4>
+          <div class="step-visual">
+            <img src="{{ url_for('static', filename='assets/Step2.png') }}" alt="Step 2" />
+          </div>
+          <p class="text-sm">Find your photos</p>
+        </div>
+        <div class="step-container flex flex-col center">
+          <h4 class="text-sm">Step 3</h4>
+          <div class="step-visual">
+            <img src="{{ url_for('static', filename='assets/Step3.png') }}" alt="Step 3" />
+          </div>
+          <p class="text-sm">Get them delivered to your email in 72 hours</p>
+        </div>
+      </section>
+      <button id="selfieCaptureBtn" class="flex center app-button w-75">
+        Click a selfie
+      </button>
+    </section>
 
-        <!-- video-container refers to the area where the
+    <!-- This section takes the selfie of the user in front of the camera -->
+    <section id="selfie-capturing-section" class="display-none flex-col center gap-1">
+      <div class="flex flex-col center gap-1">
+        <h1 class="text-lg">Ready? Set? Smile!</h1>
+        <p>Scan your face to get your photos from the XYZ event</p>
+      </div>
+
+      <!-- video-container refers to the area where the
         selfie will be captured -->
-        <div id="video-container" class="relative">
-          <video id="video" autoplay></video>
-          <img
-            src="{{ url_for('static', filename='assets/FaceOverlay.png') }}"
-            alt="Face Overlay"
-            id="centerImage"
-          />
-        </div>
-        <button id="findMyPhotosBtn" class="flex center app-button">
-          Find My Photos
-        </button>
-      </section>
+      <div id="video-container" class="relative">
+        <video id="video" autoplay></video>
+        <img src="{{ url_for('static', filename='assets/FaceOverlay.png') }}" alt="Face Overlay" id="centerImage" />
+      </div>
+      <button id="findMyPhotosBtn" class="flex center app-button w-75">
+        Find My Photos
+      </button>
+    </section>
 
-      <!-- This section is displayed after submitting the selfie
+    <!-- This section is displayed after submitting the selfie
          when the backend tells us that there are some similar images
         found with respect to the above selfie -->
-      <section id="results-section" class="display-none flex-col center gap-1">
-        <div class="flex flex-col center gap-1">
-          <h1>Your photos from the XYZ event</h1>
-        </div>
-        <div class="photos-grid"></div>
-        <button
-          id="proceedToFormBtnAfterResultsScreen"
-          class="flex center app-button"
-        >
-          Get your images on email
-        </button>
-      </section>
+    <section id="results-section" class="display-none flex-col gap-1 center">
+      <div class="flex flex-col center gap-1">
+        <h1 class="text-lg">Your photos from the XYZ event</h1>
+      </div>
+      <div class="photos-grid">
+      </div>
+      <button id="proceedToFormBtnAfterResultsScreen" class="flex center app-button">
+        Get your images on email
+      </button>
+    </section>
 
-      <!-- This section is displayed after submitting the selfie
+    <!-- This section is displayed after submitting the selfie
          when the backend tells us that there are no similar images
         found with respect to the above selfie -->
-      <section
-        id="no-results-found-section"
-        class="display-none flex-col center gap-1"
-      >
-        <img
-          src="{{ url_for('static',filename = 'assets/Empty.png') }}"
-          alt="No Images Found"
-        />
-        <div class="flex flex-col center gap-1 w-40">
-          <h1>No photos found</h1>
-          <p>
-            Looks like we don’t have enough photos of you yet. Submit your email
-            id to get all your photos within 72 hours.
-          </p>
-        </div>
+    <section id="no-results-found-section" class="display-none flex-col center gap-1">
+      <img src="{{ url_for('static',filename = 'assets/Empty.png') }}" alt="No Images Found" />
+      <div class="flex flex-col center gap-1 w-40">
+        <h1 class="text-lg">No photos found</h1>
+        <p>
+          Looks like we don’t have enough photos of you yet. Submit your email
+          id to get all your photos within 72 hours.
+        </p>
+      </div>
 
-        <button
-          id="proceedToFormBtnAfterNoResultsScreen"
-          class="flex center app-button"
-        >
-          Get your images on email
-        </button>
-      </section>
+      <button id="proceedToFormBtnAfterNoResultsScreen" class="flex center app-button">
+        Get your images on email
+      </button>
+    </section>
 
-      <!-- 
+    <!-- 
         This section is displayed for showing the form 
         in which the following fields are filled like 
         name, email address & phone number through a third party
         form library
        -->
-      <section
-        id="form-fillup-section"
-        class="display-none flex-col center gap-1"
-      >
-        <div class="flex flex-col center gap-1">
-          <h1>Get your photos from the XYZ event</h1>
-        </div>
+    <section id="form-fillup-section" class="display-none flex-col center gap-1">
+      <div class="flex flex-col center gap-1">
+        <h1 class="text-lg">Get your photos from the XYZ event</h1>
+      </div>
 
-        <div class="form-container">
-          <iframe
-            id="formIframe"
-            src="https://tally.so/r/wA2GEN"
-            frameborder="0"
-            sandbox="allow-same-origin allow-scripts allow-forms"
-          ></iframe>
-        </div>
+      <div class="form-container">
+        <iframe id="formIframe" src="https://tally.so/r/wA2GEN" frameborder="0"
+          sandbox="allow-same-origin allow-scripts allow-forms"></iframe>
+      </div>
 
-        <button id="proceedToNextSelfieBtn" class="flex center app-button">
-          Refresh after submission
-        </button>
-      </section>
+      <button id="proceedToNextSelfieBtn" class="flex center app-button">
+        Refresh after submission
+      </button>
+    </section>
 
-      <!-- Section to notify if any error comes up while capturing selfie -->
-      <section id="error-section" class="display-none flex-col center gap-1">
-        <p>Seems like something is wrong. Please retry again</p>
-        <button class="app-button" id="recoverFromErrorButton">Click</button>
-      </section>
-    </main>
+    <!-- Section to notify if any error comes up while capturing selfie -->
+    <section id="error-section" class="display-none flex-col center gap-1">
+      <p class="text-lg">Seems like something is wrong. Please retry.</p>
+      <button class="app-button w-50" id="recoverFromErrorButton">Retry</button>
+    </section>
+  </main>
 
-    <script
-      type="text/javascript"
-      src="{{url_for('static', filename='/index.js')}}"
-    ></script>
-  </body>
+  <script type="text/javascript" src="{{url_for('static', filename='/index.js')}}"></script>
+</body>
+
 </html>
