@@ -55,12 +55,11 @@
   width: 75%;
 }
 
-.w-50{
+.w-50 {
   width: 50%;
 }
 
-
-.text-xl{
+.text-xl {
   font-size: 3rem;
 }
 
@@ -74,4 +73,8 @@
 
 .text-xs {
   font-size: 12px;
+}
+
+.text-center {
+  text-align: center;
 }
