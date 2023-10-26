@@ -1,8 +1,8 @@
 /*
 Font families used:
-1. Lato font with 700 weight
+1. Lato font with 300, 400, 700 weights
 */
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap");
 
 /*
 Flex , gap & display related utilities
@@ -29,11 +29,13 @@ body {
 .app-button {
   background-color: var(--primary-theme-color);
   color: var(--white);
-  padding: 1.5rem 4rem;
+  padding: 1rem 2rem;
   border: 1px solid transparent;
   border-radius: 9999px;
-  font-size: 1rem;
+  font-size: 18px;
+  font-weight: 700;
   cursor: pointer;
+  margin-top: 12px;
 }
 
 /* Styles for ribbons at the start */
@@ -67,8 +69,8 @@ body {
 }
 
 .weddings-by-betterhalf-container img {
-  width: 310px;
-  height: 50%;
+  width: 200px;
+  height: 69px;
 }
 
 /* Styling for this main-content-viewer
@@ -110,9 +112,13 @@ related to helping the user understand*/
   text-transform: uppercase;
 }
 
-.step-container > img {
-  width: 123px;
-  height: 123px;
+.step-visual > img {
+  width: 5rem;
+  height: 5rem;
+}
+
+.step-container > p {
+  flex: 1;
 }
 
 /*
@@ -145,24 +151,27 @@ Selfie capturing section
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  height:100%;
+  height: 100%;
   max-height: 550px;
   overflow: scroll;
   padding: 1rem;
-  border: 2px solid pink;
+  border: 2px solid transparent;
 }
 
 .photo-grid-item {
   height: 300px;
   object-fit: contain;
-  border-radius: 1rem;
+  border-radius: 8px;
 }
 
 /* No images found section  */
-#no-results-found-section img,
-#form-submit-successful-section img {
-  width: 291px;
-  height: 291px;
+#no-results-found-section img {
+  width: 201px;
+  height: 201px;
+}
+
+#error-section {
+  margin-top: 2rem;
 }
 
 #error-section p {
@@ -172,14 +181,13 @@ Selfie capturing section
 
 /* Form section */
 .form-container {
-  width: 500px;
-  height: 600px;
+  width: 450px;
+  height: 500px;
 }
 
 .form-container iframe {
   width: 100%;
   height: 100%;
-  border: 2px solid pink;
+  border: 2px solid transparent;
   border-radius: 16px;
 }
-
